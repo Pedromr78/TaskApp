@@ -4,6 +4,7 @@ import Register from "../components/register.vue";
 import tasks from "../components/tasks.vue";
 import addtasks from "../components/addtask.vue";
 import task from "../components/task.vue";
+import DemoApp from "../components/DemoApp.vue";
 const routes = [
   {
     path: "/login",
@@ -19,6 +20,11 @@ const routes = [
     path: "/tasks",
     name: "tasks",
     component: tasks,
+  },
+  {
+    path: "/demoapp",
+    name: "demoapp",
+    component: DemoApp,
   },
   {
     path: "/addtask",
