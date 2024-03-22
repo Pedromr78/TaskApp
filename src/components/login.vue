@@ -93,9 +93,7 @@ methods:{
         localStorage.setItem('user',JSON.stringify(this.user))
         localStorage.setItem('tocken',this.tocken)
         this.status= 'success'
-        setTimeout(() => {
-          
-        }, 1000);
+    
         this.$router.push({ path: 'tasks' })
 
       }else{

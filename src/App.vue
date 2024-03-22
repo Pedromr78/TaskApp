@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Menu from './components/menu.vue'
-import login from './components/login.vue'
-import register from './components/register.vue'
+
 </script>
 
 <template>

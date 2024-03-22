@@ -1,61 +1,64 @@
 
 <template>
-<Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <!-- Mobile menu button-->
-          <DisclosureButton class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-            <span class="absolute -inset-0.5" />
-            <span class="sr-only">Open main menu</span>
-            <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
-            <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
-          </DisclosureButton>
-        </div>
-        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-          <div class="flex flex-shrink-0 items-center">
-           
-          </div>
-          <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-4" v-if="user">
-             
-              <a class="bg-gray-900 text-white:text-gray-300 hover : bg-gray-700 hover:text-white : rounded-md px-3 py-2 text-sm font-medium" aria-current="page" undefined><router-link to="/tasks">Tasks</router-link></a>
-              <a class="bg-gray-900 text-white:text-gray-300 hover : bg-gray-700 hover:text-white : rounded-md px-3 py-2 text-sm font-medium" aria-current="page" undefined><router-link to="/addtask">New task</router-link></a>
-            </div>
-          </div>
-        </div>
-        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-         
+<!-- component -->
+<!-- follow me on twitter @asad_codes -->
 
-          <!-- Profile dropdown -->
-          <Menu as="div" class="relative ml-3">
-            <div>
-              <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-4" v-if="!user">
-             
-              <a class="bg-gray-900 text-white:text-gray-300 hover : bg-gray-700 hover:text-white : rounded-md px-3 py-2 text-sm font-medium" aria-current="page" undefined><router-link to="/login">login</router-link></a>
-              <a class="bg-gray-900 text-white:text-gray-300 hover : bg-gray-700 hover:text-white : rounded-md px-3 py-2 text-sm font-medium" aria-current="page" undefined><router-link to="/register">register</router-link></a>
-            </div>
-            <div class="flex space-x-4" v-if="user">
-             
-             <a class="bg-gray-900 text-white:text-gray-300 hover : bg-gray-700 hover:text-white : rounded-md px-3 py-2 text-sm font-medium" aria-current="page" undefined>{{ user.name }}</a>
-             <button @click.prevent="onsubmit()" class="bg-gray-900 text-white:text-gray-300 hover : bg-gray-700 hover:text-white : rounded-md px-3 py-2 text-sm font-medium" aria-current="page" undefined >logout</button>
-           </div>
-          </div>
-            </div>
-          
-          </Menu>
+<div class="flex flex-wrap place-items-center mt-0">
+  <section class="relative mx-auto">
+      <!-- navbar -->
+    <nav class="flex justify-between bg-gray-900 text-white w-screen">
+      <div class="px-5 xl:px-12 py-6 flex w-full items-center">
+        <a class="text-3xl font-bold font-heading" href="#">
+          <!-- <img class="h-9" src="logo.png" alt="logo"> -->
+          MyTasks
+        </a>
+        <!-- Nav Links -->
+        <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12" >
+          <li><a v-if=user class="hover:text-gray-200" >  <router-link to="/tasks">Calendar</router-link></a></li>
+          <li><a v-if=user class="hover:text-gray-200" ><router-link to="/addtask">New task</router-link></a></li>
+          <li><a v-if=user class="hover:text-gray-200" ><router-link to="/demoapp">Appdono</router-link></a></li>
+          <!-- <li><a class="hover:text-gray-200" href="#">Collections</a></li>
+          <li><a class="hover:text-gray-200" href="#">Contact Us</a></li> -->
+        </ul>
+        <!-- Header Icons -->
+        <div class="hidden xl:flex items-center space-x-5 items-center">
+          <a class="hover:text-gray-200" v-if="!user">
+            <router-link to="/login">login</router-link>
+          </a>
+          <a class="flex items-center hover:text-gray-200" v-if=!user>
+            <router-link to="/login">register</router-link>
+          </a>
+          <!-- Sign In / Register      -->
+          <a v-if="user" class="flex items-center hover:text-gray-200" href="#">
+             {{ user.name }}
+          </a>
+          <a v-if="user" class="flex items-center hover:text-gray-200" href="#" @click.prevent="logout()">
+            logout
+          </a>
         </div>
       </div>
-    </div>
+      <!-- Responsive navbar -->
+      <a class="xl:hidden flex mr-6 items-center" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span class="flex absolute -mt-5 ml-4">
+          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+          </span>
+        </span>
+      </a>
+      <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </a>
+    </nav>
+    
+  </section>
+</div>
 
-    <DisclosurePanel class="sm:hidden">
-      <div class="space-y-1 px-2 pb-3 pt-2">
-        <DisclosureButton v-for="item in navigation" :key="item.name" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
-       
-      </div>
-    </DisclosurePanel>
-  </Disclosure>
+
 
 </template>
 
@@ -65,41 +68,34 @@
   color: #888;
 }
 </style>
-<script setup lang="ts">
-import { ref } from 'vue'
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+<script  lang="ts">
 
-const navigation = [
-
-  { name: 'Tasks', href: '', current: false },
-  { name: 'New task', href: '', current: false },
- 
-]
-const users = [
-
-  { name: 'login', current: false },
-  { name: 'register', current: false },
- 
-]
+import { defineComponent } from 'vue';
 
 
+export default defineComponent({
+  props: {
 
+  }, data() {
+    return {
+      user: JSON.parse(localStorage.getItem('user'))
+    }
+  },
 
+  mounted() {
+    user: JSON.parse(localStorage.getItem('user'))
+  },
+  methods: {
+    logout(){
+       localStorage.clear();
+       this.user= ''
+      this.$router.push({ path: 'login' })
+   
+    }
 
-defineProps<{ msg: string }>()
+  }
 
-const count = ref(0)
-const user = ref('')
-
-
-user.value=JSON.parse(localStorage.getItem('user'))
-
-
-const onsubmit= () => {
-  localStorage.clear();
-  window.location.href = "http://localhost:5173/login";
-}
+})
 
 
 </script>
