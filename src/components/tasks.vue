@@ -20,9 +20,7 @@ import axios from 'axios';
 
 
 export default defineComponent({
-  props: {
-
-  }, data() {
+ data() {
     return {
       tasks: '',
       tocken: localStorage.getItem('tocken'),
@@ -41,7 +39,7 @@ export default defineComponent({
           Authorization : this.tocken 
         }
       })
-      console.log(data.data);
+     
       this.tasks= data.data.tasks
     }
 

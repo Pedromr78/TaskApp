@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { defineProps, onMounted } from "vue";
+// import { defineProps, onMounted } from "vue";
 
 const id= ref('')
 

@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div v-if=" status == 'error'" role="alert">
+        <div v-if="status == 'error'" role="alert">
             <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
               Danger
             </div>
@@ -55,7 +55,7 @@ export default defineComponent({
 props: {
   email: { type: String, required: true },
   password: { type: String, required: true },
-
+  status: String
 },
 data() {
   return {
@@ -77,6 +77,9 @@ methods:{
         email: this.email,
         password: this.password
         
+      }).catch(error => {
+   
+        this.status= 'error'
       })
        
       const responsetoken:any = await axios.post('http://localhost:3000/users/login',{
@@ -84,6 +87,9 @@ methods:{
       email: this.email,
       password: this.password,
       gettoken: 'true'
+      }) .catch(error => {
+   
+        this.status= 'error'
       })
 
       this.user= responseuser.data.user
@@ -95,10 +101,8 @@ methods:{
         this.status= 'success'
     
         this.$router.push({ path: 'tasks' })
-
-      }else{
-        this.status= 'error'
       }
+  
     }
 }
 })
