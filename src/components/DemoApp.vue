@@ -7,7 +7,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, reload } from './event-utils'
 import axios from 'axios';
-import { EventInput } from '@fullcalendar/core'
+// import { EventInput } from '@fullcalendar/core'
 
 
 export default defineComponent({
@@ -17,8 +17,9 @@ export default defineComponent({
   data() {
     return {
       tasks: '',
+      time:0,
       tocken: localStorage.getItem('tocken'),
-   
+      id: '',
       arg: {},
       name: '',
       description: '',
@@ -36,7 +37,7 @@ export default defineComponent({
         },
         initialView: 'dayGridMonth',
         // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-        events: INITIAL_EVENTS,
+        events: reload,
         editable: true,
         selectable: true,
 
@@ -55,9 +56,17 @@ export default defineComponent({
       currentEvents: [] as EventApi[],
     }
   },
-  mounted() {
+  
+  mounted:function(){
+  //   this.time = setInterval(() => {
+  //     this.calendarOptions.events= reload;
+  //     // console.log("me hago" + this.calendarOptions.events)
+  // }, 1000)
+
     this.getTasks()
+ 
   },
+
   methods: {
     async ondelete(id: number) {
     
@@ -68,10 +77,9 @@ export default defineComponent({
         }
    
       })
-    //   .then(()=>{
-     
-    // })
-  
+      let calendarApi = this.$refs.fullCalendar.getApi()
+      calendarApi.refetchEvents()
+ 
         this.getTasks();
    
 
@@ -126,8 +134,8 @@ export default defineComponent({
           this.task.status = 'error'
         })
         this.getTasks()
-       
-     
+        let calendarApi = this.$refs.fullCalendar.getApi()
+      calendarApi.refetchEvents()
 
     },
     showform() {
@@ -143,7 +151,15 @@ export default defineComponent({
     handleEvents(events: EventApi[]) {
       this.currentEvents = events
     },
-  }
+    showUpdate(id:number){
+      this.id=id
+      document.getElementById('tasks').style.display = '';
+      document.getElementById('form').style.display = 'none';
+    }
+  },
+//   beforeDestroy() {
+//   clearInterval(this.time)
+// }
 })
 
 </script>
@@ -156,7 +172,7 @@ export default defineComponent({
 
       <ol v-for="task in tasks">
         <li v-if="task.date == arg.dateStr">{{ task.name }}: {{
-      task.description }}<button @click.prevent="ondelete(task.ID)"
+      task.description }}<button @click.prevent="showupdate(task.ID)"
             class="ml-4 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded">Update</button>
           <button @click.prevent="ondelete(task.ID)"
             class="ml-4 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded">Delete</button>

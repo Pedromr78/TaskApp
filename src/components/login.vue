@@ -46,9 +46,9 @@
 </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, getCurrentInstance  } from 'vue'
 import axios from 'axios'
-
+// import Menu from './menu'
 
 export default defineComponent({
 // type inference enabled
@@ -100,7 +100,10 @@ methods:{
         localStorage.setItem('tocken',this.tocken)
         this.status= 'success'
     
-        this.$router.push({ path: 'tasks' })
+        this.$router.push({ path: 'demoapp' })
+    
+
+    
       }
   
     }
