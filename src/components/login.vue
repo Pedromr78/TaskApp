@@ -100,7 +100,7 @@ methods:{
         localStorage.setItem('tocken',this.tocken)
         this.status= 'success'
     
-        this.$router.push({ path: 'demoapp' })
+        this.$router.push({ path: 'calendar' })
     
 
     

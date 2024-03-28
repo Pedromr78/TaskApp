@@ -7,17 +7,14 @@
       <!-- navbar -->
       <nav class="flex justify-between bg-gray-900 text-white w-screen">
         <div class="px-5 xl:px-12 py-6 flex w-full items-center">
-          <a class="text-3xl font-bold font-heading" href="#">
+          <a class="text-3xl font-bold font-heading">
             <!-- <img class="h-9" src="logo.png" alt="logo"> -->
-            MyTasks
+            <router-link to="/">CalendarApp</router-link>
           </a>
           <!-- Nav Links -->
           <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-            <li><a v-if=user class="hover:text-gray-200"> <router-link to="/tasks">Calendar</router-link></a></li>
-            <li><a v-if=user class="hover:text-gray-200"><router-link to="/addtask">New task</router-link></a></li>
-            <li><a v-if=user class="hover:text-gray-200"><router-link to="/demoapp">Appdono</router-link></a></li>
-            <!-- <li><a class="hover:text-gray-200" href="#">Collections</a></li>
-          <li><a class="hover:text-gray-200" href="#">Contact Us</a></li> -->
+            <li>  <a  class="flex items-center hover:text-gray-200"><router-link to="/">Home</router-link></a> </li>
+              <li>  <a  class="flex items-center hover:text-gray-200"><router-link to="/calendar">Calendar</router-link></a> </li>
           </ul>
           <!-- Header Icons -->
           <div class="hidden xl:flex items-center space-x-5 items-center">
@@ -25,10 +22,10 @@
               <router-link to="/login">login</router-link>
             </a>
             <a class="flex items-center hover:text-gray-200" v-if=!user>
-              <router-link to="/login">register</router-link>
+              <router-link to="/register">register</router-link>
             </a>
             <!-- Sign In / Register      -->
-            <a v-if="user" class="flex items-center hover:text-gray-200" href="#">
+            <a v-if="user" class="flex items-center " href="#">
               {{ user.name }}
             </a>
             <a v-if="user" class="flex items-center hover:text-gray-200" href="#" @click.prevent="logout()">

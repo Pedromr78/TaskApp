@@ -1,10 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Login from "../components/login.vue";
 import Register from "../components/register.vue";
-import tasks from "../components/tasks.vue";
-import addtasks from "../components/addtask.vue";
-import task from "../components/task.vue";
-import DemoApp from "../components/DemoApp.vue";
+import Calendar from "../components/Calendar.vue";
+import Home from "../components/Home.vue";
 const routes = [
   {
     path: "/login",
@@ -16,26 +14,23 @@ const routes = [
     name: "Register",
     component: Register,
   },
+ 
   {
-    path: "/tasks",
-    name: "tasks",
-    component: tasks,
-  },
+    path: "/calendar",
+    name: "calendar",
+    component: Calendar,
+  },  
   {
-    path: "/demoapp",
-    name: "demoapp",
-    component: DemoApp,
+    path: "/calendar",
+    name: "calendar",
+    component: Calendar,
   },
-  {
-    path: "/addtask",
-    name: "addtasks",
-    component: addtasks,
+   {
+    path: "/",
+    name: "home",
+    component: Home,
   },
-  {
-    path: "/task/:id",
-    name: "task",
-    component: task,
-  },
+
 ];
 
 const router = createRouter({
