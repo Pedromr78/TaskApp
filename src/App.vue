@@ -1,13 +1,11 @@
 <script lang="ts">
 import Menu from './components/menu.vue'
-import Footer from './components/Footer.vue'
 import { defineComponent } from 'vue';
 
 
 export default defineComponent({
   components: {
-    Menu,
-    Footer
+    Menu
   },
   data() {
     return {
@@ -45,7 +43,7 @@ export default defineComponent({
  <Menu/>
 
  <router-view></router-view>
-<Footer/>
+<!-- <Footer/> -->
 </template>
 
 <style scoped>
@@ -61,8 +59,5 @@ export default defineComponent({
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
-/* footer{
-  position: absolute;
-  bottom: 0;
-} */
+
 </style>
