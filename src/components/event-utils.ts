@@ -57,6 +57,6 @@ for(var i =0; i< tasks.length; i++ )
   return INITIAL_EVENTS;
 }
 
-export function createEventId() {
-  return String(eventGuid++)
-}
+// export function createEventId() {
+//   return String(eventGuid++)
+// }

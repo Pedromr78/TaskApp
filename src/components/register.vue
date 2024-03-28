@@ -87,7 +87,7 @@ const surname = ref('')
 const email = ref('')
 const password = ref('')
 
-const user = ref('');
+const user: any = ref('');
 
 const onsubmit= () => {
   const form= {
