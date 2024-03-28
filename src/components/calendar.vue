@@ -1,11 +1,11 @@
 <script lang='ts'>
-import { defineComponent, onMounted } from 'vue'
-import { CalendarOptions, EventApi, DateSelectArg, EventClickArg, CalendarApi } from '@fullcalendar/core'
+import { defineComponent } from 'vue'
+import { CalendarOptions, EventApi} from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, reload } from './event-utils'
+import { reload } from './event-utils'
 import axios from 'axios';
 // import { EventInput } from '@fullcalendar/core'
 
@@ -16,14 +16,24 @@ export default defineComponent({
   },
   data() {
     return {
-      tasks: '',
+      tasks: {},
       time: 0,
+      error:'',
       tocken: localStorage.getItem('tocken'),
       id: '',
-      arg: {},
+      arg: {
+        dateStr:''
+      },
       name: '',
       description: '',
-      task: '',
+      task: {
+        name: '',
+        date: '',
+        description: '',
+        ID: '',
+        status: ''
+
+      },
       calendarOptions: {
         plugins: [
           dayGridPlugin,
@@ -128,7 +138,7 @@ export default defineComponent({
           this.task = taskresponse
           // console.log(taskresponse)
         }).catch(error => {
-
+          this.error=error
           this.task.status = 'error'
         })
         
@@ -168,7 +178,7 @@ export default defineComponent({
           this.task = taskresponse
 
         }).catch(error => {
-
+          this.error= error
           this.task.status = 'error'
         })
 
@@ -194,7 +204,7 @@ export default defineComponent({
     handleEvents(events: EventApi[]) {
       this.currentEvents = events
     },
-    showUpdate(id: number) {
+    showUpdate(id: any) {
       this.id = id
       document.getElementById('tasks').style.display = 'none';
       document.getElementById('updateform').style.display = '';
@@ -226,14 +236,14 @@ export default defineComponent({
       <div id="tasks" class="p-5">
 
         <ol v-for="task in tasks">
-          <li v-if="task.date == arg.dateStr">
-            <h4><strong>{{ task.name }}</strong></h4>
-            <p class="mt-3"> {{ task.description }}</p>
+          <li v-if="task['date'] == arg.dateStr">
+            <h4><strong>{{ task['name'] }}</strong></h4>
+            <p class="mt-3"> {{ task['description'] }}</p>
 
-            <p class="mt-3"> <button @click.prevent="showUpdate(task.ID)"
+            <p class="mt-3"> <button @click.prevent="showUpdate(task['ID'])"
                 class="ml-4 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded">Update</button>
 
-              <button @click.prevent="ondelete(task.ID)"
+              <button @click.prevent="ondelete(task['ID'])"
                 class="ml-4 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded">Delete</button>
             </p>
           </li>

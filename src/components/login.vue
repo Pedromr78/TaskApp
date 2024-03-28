@@ -62,7 +62,7 @@
 </footer>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance  } from 'vue'
+import { defineComponent  } from 'vue'
 import axios from 'axios'
 // import Menu from './menu'
 
@@ -76,6 +76,7 @@ props: {
 data() {
   return {
     user: '',
+    error:'',
     tocken: '',
     status:'',
     email: '',
@@ -94,7 +95,7 @@ methods:{
         password: this.password
         
       }).catch(error => {
-   
+        this.error = error
         this.status= 'error'
       })
        
@@ -104,7 +105,7 @@ methods:{
       password: this.password,
       gettoken: 'true'
       }) .catch(error => {
-   
+        this.error = error
         this.status= 'error'
       })
 

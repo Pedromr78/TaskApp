@@ -14,21 +14,21 @@
           <!-- Nav Links -->
           <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
             <li>  <a  class="flex items-center hover:text-gray-200"><router-link to="/">Home</router-link></a> </li>
-              <li v-if="user">  <a  class="flex items-center hover:text-gray-200"><router-link to="/calendar">Calendar</router-link></a> </li>
+              <li v-if="user.name">  <a  class="flex items-center hover:text-gray-200"><router-link to="/calendar">Calendar</router-link></a> </li>
           </ul>
           <!-- Header Icons -->
           <div class="hidden xl:flex items-center space-x-5 items-center">
-            <a class="hover:text-gray-200" v-if="!user">
+            <a class="hover:text-gray-200" v-if="!user.name">
               <router-link to="/login">login</router-link>
             </a>
-            <a class="flex items-center hover:text-gray-200" v-if=!user>
+            <a class="flex items-center hover:text-gray-200" v-if=!user.name>
               <router-link to="/register">register</router-link>
             </a>
             <!-- Sign In / Register      -->
-            <a v-if="user" class="flex items-center " href="#">
+            <a v-if="user.name" class="flex items-center " href="#">
               {{ user.name }}
             </a>
-            <a v-if="user" class="flex items-center hover:text-gray-200" href="#" @click.prevent="logout()">
+            <a v-if="user.name" class="flex items-center hover:text-gray-200" href="#" @click.prevent="logout()">
               logout
             </a>
           </div>
@@ -75,7 +75,12 @@ export default defineComponent({
 
   data() {
     return {
-      user: '',
+      user: {
+        ID: '',
+        name: '',
+        surname: '',
+        email: ''
+      },
       timer: 0
     }
   },
@@ -91,7 +96,12 @@ export default defineComponent({
   methods: {
     logout() {
       localStorage.clear();
-      this.user = ''
+      this.user = {
+        ID: '',
+        name: '',
+        surname: '',
+        email: ''
+      }
       this.$router.push({ path: 'login' })
 
     },
