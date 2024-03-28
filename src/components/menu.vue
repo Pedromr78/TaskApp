@@ -5,7 +5,7 @@
   <div class="flex flex-wrap place-items-center mt-0">
     <section class="relative mx-auto">
       <!-- navbar -->
-      <nav class="flex justify-between bg-gray-900 text-white w-screen">
+      <nav class="flex justify-between bg-cyan-950 text-black w-screen">
         <div class="px-5 xl:px-12 py-6 flex w-full items-center">
           <a class="text-3xl font-bold font-heading">
             <!-- <img class="h-9" src="logo.png" alt="logo"> -->
@@ -14,7 +14,7 @@
           <!-- Nav Links -->
           <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
             <li>  <a  class="flex items-center hover:text-gray-200"><router-link to="/">Home</router-link></a> </li>
-              <li>  <a  class="flex items-center hover:text-gray-200"><router-link to="/calendar">Calendar</router-link></a> </li>
+              <li v-if="user">  <a  class="flex items-center hover:text-gray-200"><router-link to="/calendar">Calendar</router-link></a> </li>
           </ul>
           <!-- Header Icons -->
           <div class="hidden xl:flex items-center space-x-5 items-center">
