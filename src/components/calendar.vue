@@ -5,8 +5,10 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { reload } from './event-utils'
+// import { reload } from './event-utils'
 import axios from 'axios';
+import { EventInput } from '@fullcalendar/core'
+
 // import { EventInput } from '@fullcalendar/core'
 
 
@@ -16,6 +18,7 @@ export default defineComponent({
   },
   data() {
     return {
+      
       tasks: {},
       time: 0,
       error:'',
@@ -47,16 +50,14 @@ export default defineComponent({
         },
         initialView: 'dayGridMonth',
         // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-        events: reload,
+        events: this.reload,
         editable: true,
         selectable: true,
-
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
         dateClick: this.handleDateClick,
-        eventsSet: this.handleEvents,
-
+        // eventsSet: this.handleEvents
         /* you can update a remote database when these fire:
         eventAdd:
         eventChange:
@@ -78,20 +79,45 @@ export default defineComponent({
   },
 
   methods: {
+   async reload(){
+  const INITIAL_EVENTS: EventInput[] = [
+
+  ]
+  
+  let token= localStorage.getItem('tocken')
+  if(token){
+const data: any = await axios.get('http://localhost:3000/tasks',{
+  headers: {
+    Authorization :  localStorage.getItem('tocken'),
+  }
+})
+ let tasks= data.data.tasks
+for(var i =0; i< tasks.length; i++ )
+{
+  tasks[i].date= tasks[i].date.split("-").reverse().join("-");
+  tasks[i].title= tasks[i].name
+  tasks[i].id=  tasks[i].ID
+
+  INITIAL_EVENTS.push(tasks[i]);
+}
+}
+  return INITIAL_EVENTS;
+},
     close() {
-      document.getElementById('emerg').style.display = 'none';
+      const ermerg:any = document.getElementById('emerg');
+      ermerg.style.display = 'none';
     },
     async ondelete(id: number) {
 
 
-      const data: any = await axios.delete('http://localhost:3000/tasks/task/' + id, {
+     await axios.delete('http://localhost:3000/tasks/task/' + id, {
         headers: {
           Authorization: this.tocken
         }
 
       })
-      let calendarApi = this.$refs.fullCalendar.getApi()
-      calendarApi.refetchEvents()
+      let calendarApi =   this.$refs['fullCalendar']as any
+      calendarApi.getApi().refetchEvents()
 
       this.getTasks();
 
@@ -107,11 +133,14 @@ export default defineComponent({
         }
       })
 
-      this.tasks = data.data.tasks
-      for (var i = 0; i < this.tasks.length; i++) {
-        this.tasks[i].date = this.tasks[i].date.split("-").reverse().join("-");
-      }
 
+      const all= data.data.tasks
+      for (var i in all) {
+        all
+        all[i].date = all[i].date.split("-").reverse().join("-");
+      }
+      
+      this.tasks = all;
 
 
     },
@@ -123,7 +152,7 @@ export default defineComponent({
         date: datechanged,
         status: 'succes'
       }
-      const requestOptions = {
+      const requestOptions:any = {
         method: "PUT",
         headers: {
           'Authorization': localStorage.getItem('tocken'),
@@ -143,10 +172,12 @@ export default defineComponent({
         })
         
         this.getTasks()
-      let calendarApi = this.$refs.fullCalendar.getApi()
-      calendarApi.refetchEvents()
-      document.getElementById('tasks').style.display = '';
-      document.getElementById('updateform').style.display = 'none';
+        let calendarApi =   this.$refs['fullCalendar']as any
+      calendarApi.getApi().refetchEvents()
+      let divtasks:any=document.getElementById('tasks')
+      divtasks.style.display = '';
+      let updateform:any=document.getElementById('updateform')
+      updateform.style.display = 'none';
       this.name = '';
       this.description = '';
     },
@@ -160,7 +191,7 @@ export default defineComponent({
 
       }
 
-      const requestOptions = {
+      const requestOptions:any = {
         method: "POST",
         headers: {
           'Authorization': localStorage.getItem('tocken'),
@@ -184,30 +215,40 @@ export default defineComponent({
 
 
       this.getTasks()
-      let calendarApi = this.$refs.fullCalendar.getApi()
-      calendarApi.refetchEvents()
-      document.getElementById('tasks').style.display = '';
-      document.getElementById('form').style.display = 'none';
+      let calendarApi =   this.$refs['fullCalendar']as any
+      calendarApi.getApi().refetchEvents()
+      let divtasks:any=document.getElementById('tasks')
+        divtasks.style.display = '';
+        let divform:any=document.getElementById('form')
+      divform.style.display = 'none';
       this.name = '';
       this.description = '';
     },
     showform() {
-      document.getElementById('tasks').style.display = 'none';
-      document.getElementById('form').style.display = '';
+      let divtasks:any=document.getElementById('tasks')
+      divtasks.style.display = 'none';
+      let divform:any=document.getElementById('form')
+      divform.style.display = '';
     },
-    handleDateClick: function (arg) {
+    handleDateClick: function (arg:any) {
       this.arg = arg;
-      document.getElementById('emerg').style.display = '';
-      document.getElementById('tasks').style.display = '';
-      document.getElementById('form').style.display = 'none';
+      let emerg:any=document.getElementById('emerg')
+      emerg.style.display = '';
+      let divtasks:any=document.getElementById('tasks')
+      divtasks.style.display = '';
+      let divform:any=document.getElementById('form')
+      divform.style.display = 'none';
+
     },
     handleEvents(events: EventApi[]) {
       this.currentEvents = events
     },
     showUpdate(id: any) {
       this.id = id
-      document.getElementById('tasks').style.display = 'none';
-      document.getElementById('updateform').style.display = '';
+      let divtasks:any= document.getElementById('tasks')
+      divtasks.style.display = 'none';
+      let divupdateform:any= document.getElementById('updateform')
+      divupdateform.style.display = '';
     }
   },
   //   beforeDestroy() {
@@ -222,7 +263,7 @@ export default defineComponent({
   <div class='demo-app'>
 
     <div class='demo-app-main'>
-      <FullCalendar class='demo-app-calendar' :options='calendarOptions' :events="events" ref="fullCalendar">
+      <FullCalendar class='demo-app-calendar' :options='calendarOptions' :events="calendarOptions.events" ref="fullCalendar">
         <template v-slot:eventContent='arg'>
           <b>{{ arg.timeText }}</b>
           <i>{{ arg.event.title }}</i>
