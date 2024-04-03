@@ -5,11 +5,11 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-// import { reload } from './event-utils'
+
 import axios from 'axios';
 import { EventInput } from '@fullcalendar/core'
 
-// import { EventInput } from '@fullcalendar/core'
+
 
 
 export default defineComponent({
